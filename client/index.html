@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>REST API</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container pt-3" id="app" v-cloak>
+    <h1>REST API</h1>
+
+    <form class="form-inline mb-3" @submit.prevent="createOpening">
+        <div class="form-group mr-5">
+            <label for="title" class="mr-3">Title</label>
+            <input type="text" class="form-control" id="title" v-model="form.title">
+        </div>
+        <div class="form-group mr-5">
+            <label for="audio" class="mr-3">Audio</label>
+            <input type="text" class="form-control" id="audio" v-model="form.audio">
+        </div>
+        <div class="form-group mr-5">
+            <label for="difficulty" class="mr-3">Difficulty</label>
+            <input type="text" class="form-control" id="difficulty" v-model="form.difficulty">
+        </div>
+        <button class="btn btn-primary" type="submit" :disabled="!canCreate">Create</button>
+    </form>
+
+    <div v-if="loading">
+        <loader />
+    </div>
+    <div v-else-if="openings.length">
+        <div class="card mb-3" v-for="opening in openings">
+            <div class="card-body">
+                <h5 class="card-title">{{opening.title}}</h5>
+                <p class="card-text">{{opening.audio}}</p>
+                <button class="btn btn-danger" @click="removeOpening(opening._id)">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="frontend.js"></script>
+</body>
+</html>
